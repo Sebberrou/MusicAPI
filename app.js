@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var APIError = require('./lib/error');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var songs = require('./routes/songs');
@@ -42,7 +42,10 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  if (req.accepts('text/html')) {
+    return res.render('error');
+  }
+  res.send(res.locals.message);
 });
 
 module.exports = app;
