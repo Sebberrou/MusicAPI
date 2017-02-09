@@ -14,16 +14,33 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {
    SongService.find(req.query)
        .then(songs => {
-           res.status(200).send(songs);
+         if (!songs) {
+            return next(new APIError(404, `songs not found`));
+         }
+         if (req.accepts('text/html')) {
+           return res.render('songs', {songs: songs});
+         }
+         if (req.accepts('application/json')) {
+           return res.status(200).send(songs);
+         }
        })
+       .catch(next)
    ;
 });
 router.get('/:id', (req, res) => {
    SongService.findById(req.params.id)
        .then(song => {
-         console.log(song);
-           res.status(200).render('song', { song: song });
+        if (!song) {
+           return next(new APIError(404, `id ${req.params.id} not found`));
+        }
+        if (req.accepts('text/html')) {
+          return res.render('song', {song: song});
+        }
+        if (req.accepts('application/json')) {
+          return res.status(200).send(song);
+        }
        })
+       .catch(next)
    ;
 });
 router.delete('/:id', (req, res) => {

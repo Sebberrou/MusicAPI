@@ -1,0 +1,13 @@
+<% include partials/header %>
+<ul>
+<% for(var i=0; i<songs.length; i++) {%>
+  <li>
+    <p>Titre : <%=songs[i].title%></p>
+    <p>Album : <%=songs[i].album%></p>
+    <p>Artist : <%=songs[i].artist%></p>
+ </li>
+<% } %>
+</ul>
+
+
+<% include partials/footer %>
