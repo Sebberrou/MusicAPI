@@ -33,6 +33,9 @@ exports.findByArtist = (query = {}) => {
 
    });
 };
+exports.findById = (id) => {
+  return db.Songs.findById(id);
+};
 exports.delete = (query = {}) => {
   return db.Songs.destroy({
        where: {

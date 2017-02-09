@@ -18,6 +18,14 @@ router.get('/', (req, res) => {
        })
    ;
 });
+router.get('/:id', (req, res) => {
+   SongService.findById(req.params.id)
+       .then(song => {
+         console.log(song);
+           res.status(200).render('song', { song: song });
+       })
+   ;
+});
 router.delete('/:id', (req, res) => {
    SongService.delete(req.params)
        .then(songs => {
